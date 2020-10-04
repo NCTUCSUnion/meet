@@ -59,13 +59,13 @@ class AddGroupCard extends React.Component {
 
     handleID1(evt) {
         this.setState({
-            id1: parseInt(evt.target.value).toString()
+            id1: evt.target.value
         })
     }
 
     handleID2(evt) {
         this.setState({
-            id2: parseInt(evt.target.value).toString()
+            id2: evt.target.value
         })
     }
 
