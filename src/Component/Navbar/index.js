@@ -1,6 +1,7 @@
 import {
     AppBar,
     Button,
+    CardMedia,
     Dialog,
     DialogActions,
     DialogContent,
@@ -24,6 +25,9 @@ const styles = (theme) => ({
         flexGrow: 1,
         background: '#505050 !important'
     },
+    toolbar: {
+        padding: theme.isMobile ? "0px 8px" : "0px 16px"
+    },
     title: {
         marginRight: theme.spacing(2),
         textAlign: "center",
@@ -46,6 +50,14 @@ const styles = (theme) => ({
     },
     linkBtn: {
         cursor: "pointer",
+    },
+    btn_logout: {
+        padding: theme.isMobile ? "6px 0px" : "6px 8px"
+    },
+    menu: {
+        display: 'flex',
+        alignItems: 'center',
+        flexGrow: '1'
     }
 })
 
@@ -55,7 +67,8 @@ class Navbar extends React.Component {
         this.state = {
             dialog: false,
             dialogGID: 0,
-            dialogPts: 0
+            dialogPts: 0,
+            dialogShare: false
         }
     }
 
@@ -123,7 +136,7 @@ class Navbar extends React.Component {
         const { classes, isSuper } = this.props
         return (
             <AppBar position="sticky" className={classes.root}>
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <Link href="/" variant="h6" className={[classes.title, classes.menuItem].join(' ')}>
                         <div className={classes.linebreak}>
                             <div className={classes.linebreak}>交大</div>
@@ -133,32 +146,26 @@ class Navbar extends React.Component {
                     </Link>
                     {
                         isSuper &&
-                        <Link href="/group" variant="subtitle2" className={classes.menuItem}>
-                            <div className={classes.linebreak}>組別</div>
-                            <div className={classes.linebreak}>管理</div>
-                        </Link>
-                    }
-                    {
-                        isSuper &&
-                        <Link href="/poll" variant="subtitle2" className={classes.menuItem}>
-                            <div className={classes.linebreak}>投票</div>
-                            <div className={classes.linebreak}>管理</div>
-                        </Link>
-                    }
-                    {
-                        isSuper &&
-                        <Link variant="subtitle2" className={[classes.menuItem, classes.linkBtn].join(' ')} onClick={evt => this.setState({ dialog: true })}>
-                            <div className={classes.linebreak}>個別</div>
-                            <div className={classes.linebreak}>加分</div>
-                        </Link>
-                    }
-                    {
-                        isSuper &&
-                        <div className={classes.space}></div>
-                    }
-                    {
-                        isSuper &&
-                        <Button color="inherit" onClick={this.props.act_logout}>登出</Button>
+                        <div className={classes.menu}>
+                            <Link href="/group" variant="subtitle2" className={classes.menuItem}>
+                                <div className={classes.linebreak}>組別</div>
+                                <div className={classes.linebreak}>管理</div>
+                            </Link>
+                            <Link href="/poll" variant="subtitle2" className={classes.menuItem}>
+                                <div className={classes.linebreak}>投票</div>
+                                <div className={classes.linebreak}>管理</div>
+                            </Link>
+                            <Link variant="subtitle2" className={[classes.menuItem, classes.linkBtn].join(' ')} onClick={evt => this.setState({ dialog: true })}>
+                                <div className={classes.linebreak}>個別</div>
+                                <div className={classes.linebreak}>加分</div>
+                            </Link>
+                            <Link variant="subtitle2" className={[classes.menuItem, classes.linkBtn].join(' ')} onClick={evt => this.setState({ dialogShare: true })}>
+                                <div className={classes.linebreak}>分享</div>
+                                <div className={classes.linebreak}>連結</div>
+                            </Link>
+                            <div className={classes.space}></div>
+                            <Button color="inherit" className={classes.btn_logout} onClick={this.props.act_logout}>登出</Button>
+                        </div>
                     }
                 </Toolbar>
                 <Dialog
@@ -196,6 +203,24 @@ class Navbar extends React.Component {
                         </Button>
                         <Button onClick={() => this.handlePost()} color="primary">
                             確認
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={this.state.dialogShare}
+                    onClose={() => { this.setState({ dialogShare: false }) }}>
+                    <DialogTitle>分享連結</DialogTitle>
+                    <DialogContent>
+                        <CardMedia
+                            component="img"
+                            alt="Share"
+                            image="/qrcode.png"
+                            title="share"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => { this.setState({ dialogShare: false }) }} color="secondary">
+                            完成
                         </Button>
                     </DialogActions>
                 </Dialog>
