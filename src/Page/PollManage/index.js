@@ -24,12 +24,14 @@ const styles = (theme) => ({
         }),
     },
     title: {
+        display: 'flex',
+        flex: "1 0 1",
         alignSelf: theme.isMobile ? "center" : "flex-start",
     },
     row: {
         width: '100%',
         display: 'flex',
-        flex: "0 0 0",
+        flex: "1 0 1",
         alignItems: 'center',
         justifyContent: 'center',
         columnGap: '5px',
@@ -44,10 +46,10 @@ const styles = (theme) => ({
     },
     container: {
         display: 'flex',
-        position: 'relative',
         flexFlow: "column nowrap",
         flexGrow: 1,
         alignItems: "center",
+        justifyContent: "flex-start",
     },
     rowFlexEnd: {
         display: 'flex',
@@ -146,20 +148,20 @@ class PollManage extends React.Component {
                         variant: 'error',
                     })
                 })
-                break;
+                break
             case 'OPEN':
                 this.setState({
                     dialogClose: true
                 })
-                break;
+                break
             case 'CLOSE':
                 this.setState({
                     dialogArchive: true
                 })
-                break;
+                break
             default:
                 this.getEventData()
-                break;
+                break
         }
     }
 
@@ -252,61 +254,59 @@ class PollManage extends React.Component {
                 }
                 <div className={classes.root}>
                     <div className={classes.content}>
-                        <Container>
-                            <Container className={classes.container}>
-                                <Typography variant="h4" className={classes.title}>答題事件</Typography>
-                                <div className={classes.row}>
-                                    <Select className={classes.rowFlexEnd}
-                                        value={this.state.eventIsChoice ? 1 : 0}
-                                        onChange={evt => this.onEventTypeChange(evt)} disabled={this.state.evtState !== 'NONE'}>
-                                        <MenuItem value={0}>填空</MenuItem>
-                                        <MenuItem value={1}>選擇</MenuItem>
-                                    </Select>
-                                    {
-                                        this.state.eventIsChoice &&
-                                        <TextField className={classes.rowFlexEnd} type="number" id="choice-count" label="選項數量"
-                                            value={this.state.eventChoices.toString()} onChange={evt=>this.handleChoiceChange(evt)} disabled={this.state.evtState !== 'NONE'} />
-                                    }
-                                    <Button variant="contained" color="primary" onClick={evt => this.handlePost()}>{
-                                        this.state.evtState === 'NONE' ? "新增" :
-                                            this.state.evtState === 'OPEN' ? "關閉" :
-                                                "加分並封存"
-                                    }</Button>
-                                </div>
-                            </Container>
-                            {   // Price
-                                this.state.evtState === 'CLOSE' && this.state.result &&
-                                <Container className={classes.container}>
-                                    <Divider className={classes.hr}></Divider>
-                                    <Typography variant="h4" className={classes.title}>答題配分</Typography>
-                                    {
-                                        this.state.result.slice().sort((l, r) => l.poll > r.poll ? 1 : -1).map((item, index) =>
-                                            <ChoiceScore key={index} name={(this.state.eventIsChoice ? '#' : '') + item.poll}
-                                                points={this.state.score[index]} handler={(evt) => this.onTextChange(evt, index)} />
-                                        )
-                                    }
-                                </Container>
-                            }
-                            {   // Statistics
-                                this.state.evtState !== 'NONE' && this.state.result &&
-                                <Container className={classes.container}>
-                                    <Divider className={classes.hr}></Divider>
-                                    <Typography variant="h4" className={classes.title}>答題統計</Typography>
-                                    <PieChart className={classes.pie} data={
-                                        this.state.result.sort((l, r) => l.cnt < r.cnt ? 1 : -1).map((item, index) => ({
-                                            title: (this.state.eventIsChoice ? '#' : '') + item.poll,
-                                            value: item.cnt,
-                                            color: piecolor[index % piecolor.length]
-                                        }))
-                                    } radius={48} label={({ dataEntry }) => (dataEntry.title + ': ' + dataEntry.value + '組')}
-                                        labelStyle={{
-                                            fontSize: "3px",
-                                            fontWeight: "bold"
-                                        }}
-                                    />
-                                </Container>
-                            }
+                        <Container className={classes.container}>
+                            <Typography variant="h4" className={classes.title}>答題事件</Typography>
+                            <div className={classes.row}>
+                                <Select className={classes.rowFlexEnd}
+                                    value={this.state.eventIsChoice ? 1 : 0}
+                                    onChange={evt => this.onEventTypeChange(evt)} disabled={this.state.evtState !== 'NONE'}>
+                                    <MenuItem value={0}>填空</MenuItem>
+                                    <MenuItem value={1}>選擇</MenuItem>
+                                </Select>
+                                {
+                                    this.state.eventIsChoice &&
+                                    <TextField autoComplete="off" className={classes.rowFlexEnd} type="number" id="choice-count" label="選項數量"
+                                        value={this.state.eventChoices.toString()} onChange={evt=>this.handleChoiceChange(evt)} disabled={this.state.evtState !== 'NONE'} />
+                                }
+                                <Button variant="contained" color="primary" onClick={evt => this.handlePost()}>{
+                                    this.state.evtState === 'NONE' ? "新增" :
+                                        this.state.evtState === 'OPEN' ? "關閉" :
+                                            "加分並封存"
+                                }</Button>
+                            </div>
                         </Container>
+                        {   // Price
+                            this.state.evtState === 'CLOSE' && this.state.result &&
+                            <Container className={classes.container}>
+                                <Divider className={classes.hr}></Divider>
+                                <Typography variant="h4" className={classes.title}>答題配分</Typography>
+                                {
+                                    this.state.result.slice().sort((l, r) => l.poll > r.poll ? 1 : -1).map((item, index) =>
+                                        <ChoiceScore key={index} name={(this.state.eventIsChoice ? '#' : '') + item.poll}
+                                            points={this.state.score[index]} handler={(evt) => this.onTextChange(evt, index)} />
+                                    )
+                                }
+                            </Container>
+                        }
+                        {   // Statistics
+                            this.state.evtState !== 'NONE' && this.state.result &&
+                            <Container className={classes.container}>
+                                <Divider className={classes.hr}></Divider>
+                                <Typography variant="h4" className={classes.title}>答題統計</Typography>
+                                <PieChart className={classes.pie} data={
+                                    this.state.result.sort((l, r) => l.cnt < r.cnt ? 1 : -1).map((item, index) => ({
+                                        title: (this.state.eventIsChoice ? '#' : '') + item.poll,
+                                        value: item.cnt,
+                                        color: piecolor[index % piecolor.length]
+                                    }))
+                                } radius={48} label={({ dataEntry }) => (dataEntry.title + ': ' + dataEntry.value + '組')}
+                                    labelStyle={{
+                                        fontSize: "3px",
+                                        fontWeight: "bold"
+                                    }}
+                                />
+                            </Container>
+                        }
                     </div>
                 </div>
                 <Dialog

@@ -70,7 +70,7 @@ class SettingCard extends React.Component {
                     <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
                         搜尋組別
                     </Typography>
-                    <TextField type="number" value={search} onChange={handler} />
+                    <TextField autoComplete="off" type="number" value={search} onChange={handler} />
                     <Typography className={classes.searchID} variant="subtitle1" color="textSecondary" gutterBottom>
                         {id1}
                     </Typography>

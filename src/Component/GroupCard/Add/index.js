@@ -122,8 +122,8 @@ class AddGroupCard extends React.Component {
                     <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
                         新增組別
                     </Typography>
-                    <TextField type="number" id="id1" label={this.state.id1 ? this.getName(this.state.id1.toString()) : "大直屬學號"} value={this.state.id1} onChange={evt => this.handleID1(evt)} onKeyPress={evt => this.handleKeyPress(evt)} />
-                    <TextField type="number" id="id2" label={this.state.id2 ? this.getName(this.state.id2.toString()) : "小直屬學號"} value={this.state.id2} onChange={evt => this.handleID2(evt)} onKeyPress={evt => this.handleKeyPress(evt)} />
+                    <TextField autoComplete="off" type="number" id="id1" label={this.state.id1 ? this.getName(this.state.id1.toString()) : "大直屬學號"} value={this.state.id1} onChange={evt => this.handleID1(evt)} onKeyPress={evt => this.handleKeyPress(evt)} />
+                    <TextField autoComplete="off" type="number" id="id2" label={this.state.id2 ? this.getName(this.state.id2.toString()) : "小直屬學號"} value={this.state.id2} onChange={evt => this.handleID2(evt)} onKeyPress={evt => this.handleKeyPress(evt)} />
                 </CardContent>
                 <Divider className={classes.hr} light />
                 <CardActions className={classes.action}>

@@ -12,9 +12,10 @@ import {
 } from "@material-ui/core"
 import CheckIcon from '@material-ui/icons/Check'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import RefreshIcon from '@material-ui/icons/Refresh'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { logout } from '../../Redux/Actions'
+import { checkIsAvailable, logout } from '../../Redux/Actions'
 import axios from 'axios'
 import { withSnackbar } from 'notistack'
 import { API_URL } from '../../constant'
@@ -78,15 +79,29 @@ const styles = (theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        columnGap: '5px'
+        marginBottom: '12px'
     },
     groupNumber: {
         fontSize: '72px',
         fontWeight: 'bolder'
     },
+    groupID: {
+        marginLeft: "14px"
+    },
     score: {
-        fontSize: '24px',
-        fontWeight: 'bolder'
+        fontSize: '36px',
+        fontWeight: 'bolder',
+        marginLeft: "14px"
+    },
+    refresh: {
+        position: 'fixed',
+        bottom: theme.spacing(20),
+        right: theme.spacing(2),
+        backgroundColor: "#43A047",
+        color: "white",
+        "&:hover": {
+            backgroundColor: "#218838",
+        }
     },
     poll: {
         position: 'fixed',
@@ -194,7 +209,7 @@ class Main extends React.Component {
     }
 
     render() {
-        const { classes, login, isSuper, group } = this.props
+        const { classes, login, isSuper, group, act_check } = this.props
         return (
             <Container>
                 {
@@ -234,6 +249,9 @@ class Main extends React.Component {
                 <Fab color="secondary" aria-label="logout" className={classes.logout} onClick={() => { this.setState({ dialogLogout: true }) }}>
                     <ExitToAppIcon />
                 </Fab>
+                <Fab aria-label="refresh" className={classes.refresh} onClick={act_check}>
+                    <RefreshIcon />
+                </Fab>
                 <Dialog
                     open={this.state.dialogPoll}
                     onClose={() => this.handlePollClose()}>
@@ -253,7 +271,7 @@ class Main extends React.Component {
                         </DialogContentText>
                         {
                             this.state.choices === 0 &&
-                            <TextField type="number" label="答案" disabled={this.state.state === "CLOSE"} value={this.state.answer.toString()} onChange={evt => this.handleTextChange(evt)} />
+                            <TextField autoComplete="off" type="number" label="答案" disabled={this.state.state === "CLOSE"} value={this.state.answer.toString()} onChange={evt => this.handleTextChange(evt)} />
                         }
                         {
                             this.state.choices > 0 &&
@@ -273,10 +291,18 @@ class Main extends React.Component {
                         }
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => this.handlePollClose()} color="secondary">
-                            取消
-                        </Button>
-                        <Button onClick={() => this.handlePollPost()} color="primary">
+                        {
+                            this.state.state === "OPEN" &&
+                            <Button onClick={() => this.handlePollClose()} color="secondary">
+                                取消
+                            </Button>
+                        }
+                        <Button onClick={() => {
+                            if (this.state.state === "OPEN")
+                                this.handlePollPost()
+                            else 
+                                this.handlePollClose()
+                        }} color="primary">
                             確認
                         </Button>
                     </DialogActions>
@@ -309,6 +335,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+    act_check: ()=>{
+        dispatch(checkIsAvailable())
+    },
     act_logout: () => {
         dispatch(logout())
     }

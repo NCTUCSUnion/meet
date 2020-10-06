@@ -52,7 +52,7 @@ const styles = (theme) => ({
         width: theme.isMobile ? '100%' : 'fit-content',
         backgroundColor: '#f5f5f5',
         boxShadow: '1px 1px 2px #999999',
-        padding: '20px',
+        padding: '24px 28px',
         borderRadius: '.7rem',
     },
     column: {
@@ -61,21 +61,19 @@ const styles = (theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
-        rowGap: '10px'
     },
     row: {
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        columnGap: '5px'
+        justifyContent: 'center',
+        marginBottom: "12px"
     },
     label: {
-        minWidth: "70px",
-        textAlign: "end"
+        paddingRight: "12px"
     },
     textfield: {
-        width: '100%'
+        width: '80%'
     },
     btnStart: {
         width: "80%",
@@ -145,18 +143,16 @@ class Home extends React.Component {
                             <div className={classes.container}>
                                 <div className={classes.column}>
                                     <div className={classes.row}>
-                                        <InputLabel className={classes.label} htmlFor="gid">組別號碼</InputLabel>
+                                        <InputLabel className={classes.label} htmlFor="gid">組別</InputLabel>
                                         <TextField className={classes.textfield} id="gid" name="group-id" aria-describedby="group-id"
                                             onChange={evt => this.handleGIDChange(evt)}
                                             onKeyPress={evt => this.handleKeyPress(evt)} autoFocus />
                                     </div>
                                     <div className={classes.row}>
                                         <InputLabel className={classes.label} htmlFor="password">密碼</InputLabel>
-                                        <div>
-                                            <TextField className={classes.textfield} id="password" name="password" aria-describedby="password-hint" type="password"
-                                                onChange={evt => this.handlePasswordChange(evt)}
-                                                onKeyPress={evt => this.handleKeyPress(evt)} />
-                                        </div>
+                                        <TextField className={classes.textfield} id="password" name="password" aria-describedby="password-hint" type="password"
+                                            onChange={evt => this.handlePasswordChange(evt)}
+                                            onKeyPress={evt => this.handleKeyPress(evt)} />
                                     </div>
                                     <div>
                                     <FormHelperText>密碼為大直屬學號後三碼+小直屬後三碼</FormHelperText>
@@ -185,7 +181,7 @@ class Home extends React.Component {
                     }} />
                 }
             </Container>
-        );
+        )
     }
 }
 

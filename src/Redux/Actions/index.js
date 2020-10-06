@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API_URL } from '../../constant';
+import axios from 'axios'
+import { API_URL } from '../../constant'
 
 axios.defaults.withCredentials = true
 

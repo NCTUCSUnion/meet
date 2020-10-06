@@ -9,14 +9,14 @@ import {
     Link,
     TextField,
     Toolbar
-} from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import { withSnackbar } from 'notistack';
-import React from 'react';
-import { connect } from 'react-redux';
-import { API_URL } from '../../constant';
-import { checkIsAvailable, logout } from '../../Redux/Actions';
+} from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import axios from 'axios'
+import { withSnackbar } from 'notistack'
+import React from 'react'
+import { connect } from 'react-redux'
+import { API_URL } from '../../constant'
+import { checkIsAvailable, logout } from '../../Redux/Actions'
 
 axios.defaults.withCredentials = true
 
@@ -175,6 +175,7 @@ class Navbar extends React.Component {
                     <DialogContent>
                         <TextField
                             autoFocus
+                            autoComplete="off"
                             margin="dense"
                             id="group"
                             label="組別"
@@ -186,6 +187,7 @@ class Navbar extends React.Component {
                             onKeyPress={evt => this.handleKeyPress(evt)}
                         />
                         <TextField
+                            autoComplete="off"
                             margin="dense"
                             id="point"
                             label="分數"

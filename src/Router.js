@@ -1,10 +1,10 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Navbar from './Component/Navbar'
-import Group from './Page/Group';
-import Home from './Page/Home';
-import Main from './Page/Main';
-import PollManage from './Page/PollManage';
+import Group from './Page/Group'
+import Home from './Page/Home'
+import Main from './Page/Main'
+import PollManage from './Page/PollManage'
 
 const Router = () => (
     <React.Suspense fallback={null}>
@@ -18,6 +18,6 @@ const Router = () => (
             </Switch>
         </BrowserRouter>
     </React.Suspense>
-);
+)
 
-export default Router;
+export default Router
