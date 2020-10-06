@@ -1,11 +1,11 @@
 import {
-    Button, 
+    Button,
     Card,
-    CardActions, 
+    CardActions,
     CardContent,
-    Divider, 
-    InputLabel, 
-    Typography, 
+    Divider,
+    InputLabel,
+    Typography,
     withStyles
 } from '@material-ui/core'
 import React from 'react'
@@ -22,9 +22,11 @@ const styles = (theme) => ({
         textAlign: "center"
     },
     title: {
-        fontWeight: 'bold',
-        fontSize: '18px',
-        marginBottom: '12px'
+        display: 'flex',
+        flexFlow: 'row nowrap',
+        justifyContent: 'space-around',
+        flex: '1 0 1',
+        marginBottom: "12px"
     },
     content: {
         padding: "0px"
@@ -51,6 +53,14 @@ const styles = (theme) => ({
     btn: {
         margin: "0 auto"
     },
+    hrVert: {
+        margin: "0px 6px"
+    },
+    titleText: {
+        fontWeight: 'bold',
+        fontSize: '16px',
+        marginBottom: "0px"
+    }
 })
 
 class GroupCard extends React.Component {
@@ -59,9 +69,15 @@ class GroupCard extends React.Component {
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
-                    <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
-                        組別 {gid} : {pts}
-                    </Typography>
+                    <div className={classes.title}>
+                        <Typography className={classes.titleText} variant="h6" color="textSecondary" gutterBottom>
+                            組別 {gid}
+                        </Typography>
+                        <Divider className={classes.hrVert} orientation="vertical" flexItem />
+                        <Typography className={classes.titleText} variant="h6" color="textSecondary" gutterBottom>
+                            {pts} 分
+                        </Typography>
+                    </div>
                     <div className={classes.profile}>
                         <InputLabel className={classes.profileLabel}>{name1}</InputLabel>
                         <Typography variant="h6">

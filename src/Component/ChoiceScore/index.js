@@ -36,7 +36,7 @@ class ChoiceScore extends React.Component {
             <div className={classes.row}>
                 <Typography className={classes.title} variant="subtitle1">{name}</Typography>
                 <Divider orientation="vertical" flexItem />
-                <TextField autoComplete="off" className={classes.text} type="number" value={points} onChange={evt => handler(evt)} />
+                <TextField autoComplete="off" className={classes.text} type="number" value={points.toString()} onChange={evt => handler(evt)} />
             </div>
         )
     }
