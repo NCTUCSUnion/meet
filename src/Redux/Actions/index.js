@@ -3,7 +3,7 @@ import { API_URL } from '../../constant'
 
 axios.defaults.withCredentials = true
 
-export const checkIsAvailable = () => (dispatch) => {
+export const checkIsAvailable = (callback) => (dispatch) => {
     dispatch({ type: 'NONE' })
     axios.post(`${API_URL}/check`).then(
         res => res.data
@@ -70,6 +70,7 @@ export const checkIsAvailable = () => (dispatch) => {
         else {
             dispatch({ type: 'LOGIN_FAIL' })
         }
+        callback()
     })
 }
 

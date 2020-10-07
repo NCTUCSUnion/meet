@@ -128,7 +128,8 @@ class Main extends React.Component {
             dialogPoll: false,
             dialogLogout: false,
             pollState: 'NONE',
-            answer: 0
+            answer: 0,
+            reloading: false
         }
     }
 
@@ -249,7 +250,12 @@ class Main extends React.Component {
                 <Fab color="secondary" aria-label="logout" className={classes.logout} onClick={() => { this.setState({ dialogLogout: true }) }}>
                     <ExitToAppIcon />
                 </Fab>
-                <Fab aria-label="refresh" className={classes.refresh} onClick={act_check}>
+                <Fab aria-label="refresh" className={classes.refresh} onClick={() => {
+                    if (!this.state.reloading){
+                        this.setState({reloading: true})
+                        act_check(() => setTimeout(() => this.setState({reloading: false}), 1500))
+                    }
+                }}>
                     <RefreshIcon />
                 </Fab>
                 <Dialog
@@ -335,8 +341,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    act_check: ()=>{
-        dispatch(checkIsAvailable())
+    act_check: (callback)=>{
+        dispatch(checkIsAvailable(callback))
     },
     act_logout: () => {
         dispatch(logout())

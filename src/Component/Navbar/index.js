@@ -133,7 +133,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     act_check: () => {
-        dispatch(checkIsAvailable())
+        dispatch(checkIsAvailable(() => {}))
     },
     act_logout: () => {
         dispatch(logout())
