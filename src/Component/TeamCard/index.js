@@ -34,9 +34,15 @@ const styles = (theme) => ({
         borderColor: "#DDDDDD"
     },
     hr: {
-        margin: "0px 10px"
+        margin: theme.isMobile ? "0px 4px" : "0px 10px"
+    },
+    btn: {
+        padding: theme.isMobile ? "4px 8px" : "6px 16px",
+        fontSize: theme.isMobile ? "0.8125rem" : "1rem"
     },
     btnAdd: {
+        padding: theme.isMobile ? "4px 8px" : "6px 16px",
+        fontSize: theme.isMobile ? "0.8125rem" : "1rem",
         backgroundColor: "#43A047",
         color: "white",
         "&:hover": {
@@ -51,6 +57,13 @@ const styles = (theme) => ({
     },
     groups: {
         marginRight: "20px",
+    },
+    title: {
+        display: 'flex',
+        flexFlow: 'row wrap',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        fontSize: theme.isMobile ? "0.8125rem" : "1.25rem"
     }
 })
 
@@ -71,20 +84,26 @@ class TeamCard extends React.Component {
         const { classes, tid, score } = this.props
         return (
             <div className={classes.row}>
-                <Typography variant="h6">#{tid}</Typography>
+                <Typography className={classes.title} variant="h6">#{tid}</Typography>
                 <Divider className={classes.hr} orientation="vertical" flexItem />
-                <Typography variant="h6">{score} 分</Typography>
+                <Typography className={classes.title} variant="h6">
+                    <div>{score}</div>
+                    <div>分</div>
+                </Typography>
                 <Divider className={classes.hr} orientation="vertical" flexItem />
-                <Typography variant="h6">{this.state.groups.length} 組</Typography>
+                <Typography className={classes.title} variant="h6">
+                    <div>{this.state.groups.length}</div>
+                    <div>組</div>
+                </Typography>
                 <Divider className={classes.hr} orientation="vertical" flexItem />
                 <Button className={classes.btnAdd} variant="contained" disableElevation onClick={() => this.setState({ dialogAdd: true })}>加分</Button>
                 <Divider className={classes.hr} orientation="vertical" flexItem />
-                <Button color="primary" variant="contained" disableElevation onClick={() => {
+                <Button className={classes.btn} color="primary" variant="contained" disableElevation onClick={() => {
                     const groups = this.state.groups.slice().sort()
                     this.setState({ dialogEdit: true, groups: groups })
                 }}>編輯</Button>
                 <Divider className={classes.hr} orientation="vertical" flexItem />
-                <Button color="secondary" variant="contained" disableElevation onClick={() => this.setState({ dialogDel: true })}>刪除</Button>
+                <Button className={classes.btn} color="secondary" variant="contained" disableElevation onClick={() => this.setState({ dialogDel: true })}>刪除</Button>
 
                 <Dialog
                     open={this.state.dialogAdd}
@@ -141,7 +160,7 @@ class TeamCard extends React.Component {
                         {
                             this.state.groups.map((item, idx) =>
                                 <div className={classes.row} key={idx}>
-                                    <Button color="secondary" variant="contained" disableElevation
+                                    <Button size="small" color="secondary" variant="contained" disableElevation
                                         onClick={() => {
                                             if (!this.state.groupsBak) {
                                                 this.setState({ groupsBak: this.state.groups.slice() })
@@ -184,6 +203,7 @@ class TeamCard extends React.Component {
                                         groups: groups
                                     })
                                 }}
+                                disabled={this.state.groups.length >= 30}
                             >新增</Button>
                         </div>
                     </DialogContent>
